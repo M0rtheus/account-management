@@ -13,10 +13,10 @@ import java.time.LocalDate;
 public interface StatementController {
 
     @PostMapping("/insertStatementCSV")
-    ResponseEntity<Void> uploadStatement(@RequestParam MultipartFile file);
+    ResponseEntity<Void> insertStatement(@RequestParam MultipartFile file);
 
     @GetMapping("/getStatementCSV")
-    ResponseEntity<Resource> downloadStatement(@RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);
+    ResponseEntity<Resource> getStatement(@RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);
 
     @GetMapping("/getAccountBalance")
     ResponseEntity<BigDecimal> getAccountBalance(@RequestParam String accountNumber, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);

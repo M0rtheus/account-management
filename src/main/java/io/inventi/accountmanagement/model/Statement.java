@@ -12,6 +12,15 @@ import java.time.LocalDateTime;
 @Data
 public class Statement {
 
+    public Statement(String accountNumber, LocalDateTime operationDate, String beneficiary, String comment, BigDecimal amount, String currency) {
+        this.accountNumber = accountNumber;
+        this.operationDate = operationDate;
+        this.beneficiary = beneficiary;
+        this.comment = comment;
+        this.amount = amount;
+        this.currency = currency;
+    }
+
     @Id
     @GeneratedValue
     private long id;

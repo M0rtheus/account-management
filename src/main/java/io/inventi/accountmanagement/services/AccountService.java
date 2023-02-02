@@ -8,9 +8,11 @@ import java.time.LocalDate;
 
 public interface AccountService {
 
-    void uploadStatement(MultipartFile file);
+    void insertStatement(MultipartFile file);
 
-    Resource downloadStatement(LocalDate dateFrom, LocalDate dateTo);
+    boolean isCSVFormat(MultipartFile file);
+
+    Resource getStatement(LocalDate dateFrom, LocalDate dateTo);
 
     BigDecimal getAccountBalance(String accountNumber, LocalDate dateFrom, LocalDate dateTo);
 }
