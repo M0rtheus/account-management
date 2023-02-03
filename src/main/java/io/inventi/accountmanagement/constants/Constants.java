@@ -13,9 +13,22 @@ public class Constants {
     public static final String STATE_COLUMN_AMOUNT = "Amount";
     public static final String STATE_COLUMN_CURRENCY = "Currency";
 
+//    State parameter name
+    public static final String STATE_PARAMETER_OPERATION_DATE = "operationDate";
+
 //    Error messages
     public static final String CSV_PARSE_ERROR_MESSAGE = "Failed to parse CSV file: ";
+    public static final String CSV_WRITE_ERROR_MESSAGE = "Failed to export CSV file: ";
 
-//    File Types
+//    File types
     public static final String CSV_TYPE = "text/csv";
+
+//    Media types
+    public static final String CSV_MEDIA_TYPE = "application/csv";
+
+//    HTTP headers
+    public static final String HTTP_HEADER_VALUE_ATTACHMENT_FILENAME = "attachment; filename=";
+
+//    File name
+    public static final String CSV_FILE_NAME = "Statements";
 }

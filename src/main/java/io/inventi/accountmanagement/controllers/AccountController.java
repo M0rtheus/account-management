@@ -9,14 +9,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
-public interface StatementController {
+public interface AccountController {
 
     @PostMapping("/insertStatementCSV")
     ResponseEntity<Void> insertStatement(@RequestParam MultipartFile file);
 
     @GetMapping("/getStatementCSV")
-    ResponseEntity<Resource> getStatement(@RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);
+    ResponseEntity<Resource> getStatement(@RequestParam() Optional<LocalDate> dateFrom, @RequestParam Optional<LocalDate> dateTo);
 
     @GetMapping("/getAccountBalance")
     ResponseEntity<BigDecimal> getAccountBalance(@RequestParam String accountNumber, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);

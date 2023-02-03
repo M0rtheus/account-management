@@ -6,6 +6,7 @@ import io.inventi.accountmanagement.model.Statement;
 import io.inventi.accountmanagement.repositories.StatementRepository;
 import io.inventi.accountmanagement.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -38,8 +40,9 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Resource getStatement(LocalDate dateFrom, LocalDate dateTo) {
-        return null;
+    public Resource getStatement(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo) {
+        List<Statement> statements = statementRepository.getStatesByOperationDate(dateFrom, dateTo);
+        return new InputStreamResource(CSVHelper.parseStatementsToCSV(statements));
     }
 
     @Override

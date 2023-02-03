@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
 public interface AccountService {
 
@@ -12,7 +13,7 @@ public interface AccountService {
 
     boolean isCSVFormat(MultipartFile file);
 
-    Resource getStatement(LocalDate dateFrom, LocalDate dateTo);
+    Resource getStatement(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo);
 
     BigDecimal getAccountBalance(String accountNumber, LocalDate dateFrom, LocalDate dateTo);
 }
