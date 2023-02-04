@@ -20,5 +20,5 @@ public interface AccountController {
     ResponseEntity<Resource> getStatement(@RequestParam Optional<LocalDate> dateFrom, @RequestParam Optional<LocalDate> dateTo);
 
     @GetMapping("/getAccountBalance")
-    ResponseEntity<BigDecimal> getAccountBalance(@RequestParam String accountNumber, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);
+    ResponseEntity<BigDecimal> getAccountBalance(@RequestParam String accountNumber, @RequestParam Optional<LocalDate> dateFrom, @RequestParam Optional<LocalDate> dateTo);
 }

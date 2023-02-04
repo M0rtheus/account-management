@@ -37,4 +37,21 @@ public class StatementRepositoryCustomImpl implements StatementRepositoryCustom 
         cq.where(predicates.toArray(new Predicate[0])).orderBy(cb.desc((statementRoot.get(Constants.STATE_PARAMETER_OPERATION_DATE).as(LocalDateTime.class))));
         return em.createQuery(cq).getResultList();
     }
+
+    @Override
+    public List<Statement> getStatesByAccountNumberOperationDate(String accountNumber, Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Statement> cq = cb.createQuery(Statement.class);
+        Root<Statement> statementRoot = cq.from(Statement.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(statementRoot.get(Constants.STATE_PARAMETER_ACCOUNT_NUMBER), accountNumber));
+        if(dateFrom.isPresent()){
+            predicates.add(cb.greaterThanOrEqualTo(statementRoot.get(Constants.STATE_PARAMETER_OPERATION_DATE), dateFrom.get().atStartOfDay()));
+        }
+        if(dateTo.isPresent()){
+            predicates.add(cb.lessThan(statementRoot.get(Constants.STATE_PARAMETER_OPERATION_DATE), dateTo.get().plusDays(1).atStartOfDay()));
+        }
+        cq.where(predicates.toArray(new Predicate[0]));
+        return em.createQuery(cq).getResultList();
+    }
 }

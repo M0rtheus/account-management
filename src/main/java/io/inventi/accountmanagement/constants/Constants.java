@@ -15,6 +15,7 @@ public class Constants {
 
 //    State parameter name
     public static final String STATE_PARAMETER_OPERATION_DATE = "operationDate";
+    public static final String STATE_PARAMETER_ACCOUNT_NUMBER = "accountNumber";
 
 //    Error messages
     public static final String CSV_PARSE_ERROR_MESSAGE = "Failed to parse CSV file: ";

@@ -15,5 +15,5 @@ public interface AccountService {
 
     Resource getStatement(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo);
 
-    BigDecimal getAccountBalance(String accountNumber, LocalDate dateFrom, LocalDate dateTo);
+    BigDecimal getAccountBalance(String accountNumber, Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo);
 }

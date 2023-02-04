@@ -48,7 +48,11 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public BigDecimal getAccountBalance(String accountNumber, LocalDate dateFrom, LocalDate dateTo) {
-        return null;
+    public BigDecimal getAccountBalance(String accountNumber, Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo) {
+        List<Statement> statements = statementRepository.getStatesByAccountNumberOperationDate(accountNumber, dateFrom, dateTo);
+        if (statements.isEmpty()) {
+            return null;
+        }
+        return statements.stream().map(Statement::getAmount).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

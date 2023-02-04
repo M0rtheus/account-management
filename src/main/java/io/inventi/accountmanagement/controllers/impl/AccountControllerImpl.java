@@ -6,7 +6,6 @@ import io.inventi.accountmanagement.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,9 +27,9 @@ public class AccountControllerImpl implements AccountController {
     public ResponseEntity<Void> insertStatement(MultipartFile file) {
         if(accountService.isCSVFormat(file)){
             accountService.insertStatement(file);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        return ResponseEntity.noContent().build();
     }
 
     @Override
@@ -42,7 +41,11 @@ public class AccountControllerImpl implements AccountController {
     }
 
     @Override
-    public ResponseEntity<BigDecimal> getAccountBalance(String accountNumber, LocalDate dateFrom, LocalDate dateTo) {
-        return null;
+    public ResponseEntity<BigDecimal> getAccountBalance(String accountNumber, Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo) {
+        BigDecimal balance = accountService.getAccountBalance(accountNumber, dateFrom, dateTo);
+        if (balance == null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(balance);
     }
 }

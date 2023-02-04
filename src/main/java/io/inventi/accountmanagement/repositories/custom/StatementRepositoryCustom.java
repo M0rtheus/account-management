@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface StatementRepositoryCustom {
 
     List<Statement> getStatesByOperationDate(Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo);
+
+    List<Statement> getStatesByAccountNumberOperationDate(String accountNumber, Optional<LocalDate> dateFrom, Optional<LocalDate> dateTo);
 }
