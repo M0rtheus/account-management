@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -28,9 +29,10 @@ public class AccountServiceImpl implements AccountService {
         try {
             List<Statement> statements = CSVHelper.parseCSVToStatements(file.getInputStream());
             statementRepository.saveAll(statements);
-
         } catch (IOException e) {
             throw new RuntimeException(Constants.CSV_PARSE_ERROR_MESSAGE + e.getMessage());
+        } catch (TransactionSystemException e) {
+            throw new RuntimeException(Constants.STATEMENT_SAVE_ERROR_MESSAGE + e.getRootCause().getMessage());
         }
     }
 

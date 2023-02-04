@@ -18,10 +18,9 @@ public class CSVHelper {
     public static List<Statement> parseCSVToStatements(InputStream inputStream) {
         try (BufferedReader fileReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
              CSVParser csvParser = new CSVParser(fileReader,
-                     CSVFormat.DEFAULT.builder().setHeader().setIgnoreHeaderCase(true).setTrim(true).build())) {
+                     CSVFormat.DEFAULT.builder().setHeader().setIgnoreHeaderCase(true).setTrim(true).setNullString("").build())) {
 
             List<Statement> statements = new ArrayList<>();
-
             Iterable<CSVRecord> csvRecords = csvParser.getRecords();
 
             for (CSVRecord csvRecord : csvRecords) {

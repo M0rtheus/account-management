@@ -17,7 +17,7 @@ public interface AccountController {
     ResponseEntity<Void> insertStatement(@RequestParam MultipartFile file);
 
     @GetMapping("/getStatementCSV")
-    ResponseEntity<Resource> getStatement(@RequestParam() Optional<LocalDate> dateFrom, @RequestParam Optional<LocalDate> dateTo);
+    ResponseEntity<Resource> getStatement(@RequestParam Optional<LocalDate> dateFrom, @RequestParam Optional<LocalDate> dateTo);
 
     @GetMapping("/getAccountBalance")
     ResponseEntity<BigDecimal> getAccountBalance(@RequestParam String accountNumber, @RequestParam LocalDate dateFrom, @RequestParam LocalDate dateTo);
