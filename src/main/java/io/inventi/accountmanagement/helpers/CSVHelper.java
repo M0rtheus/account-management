@@ -55,9 +55,9 @@ public class CSVHelper {
         Validator validator = factory.getValidator();
         List<String> validationErrors = new ArrayList<>();
 
-        for (Statement statement : statements){
+        for (Statement statement : statements) {
             Set<ConstraintViolation<Statement>> violations = validator.validate(statement);
-            if (violations.isEmpty()){
+            if (violations.isEmpty()) {
                 continue;
             }
             for (ConstraintViolation<Statement> violation : violations) {
@@ -65,7 +65,7 @@ public class CSVHelper {
             }
         }
 
-        if (!validationErrors.isEmpty()){
+        if (!validationErrors.isEmpty()) {
             throw new CSVNotValidException(String.join(", ", validationErrors));
         }
     }
@@ -76,17 +76,17 @@ public class CSVHelper {
 
     public static ByteArrayInputStream parseStatementsToCSV(List<Statement> statements) {
 
-            try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-                 CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out),
-                     CSVFormat.DEFAULT.builder().setHeader(
-                             Constants.STATE_COLUMN_ACCOUNT_NUMBER,
-                             Constants.STATE_COLUMN_OPERATION_DATE_TIME,
-                             Constants.STATE_COLUMN_BENEFICIARY,
-                             Constants.STATE_COLUMN_COMMENT,
-                             Constants.STATE_COLUMN_AMOUNT,
-                             Constants.STATE_COLUMN_CURRENCY
-                             ).build())) {
-
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
+            validateStatements(statements);
+            CSVPrinter csvPrinter = new CSVPrinter(new PrintWriter(out),
+                    CSVFormat.DEFAULT.builder().setHeader(
+                            Constants.STATE_COLUMN_ACCOUNT_NUMBER,
+                            Constants.STATE_COLUMN_OPERATION_DATE_TIME,
+                            Constants.STATE_COLUMN_BENEFICIARY,
+                            Constants.STATE_COLUMN_COMMENT,
+                            Constants.STATE_COLUMN_AMOUNT,
+                            Constants.STATE_COLUMN_CURRENCY
+                    ).build());
             for (Statement statement : statements) {
                 List<String> data = Arrays.asList(
                         statement.getAccountNumber(),
@@ -102,7 +102,7 @@ public class CSVHelper {
 
             csvPrinter.flush();
             return new ByteArrayInputStream(out.toByteArray());
-        } catch (IOException e) {
+        } catch (IOException | CSVNotValidException e) {
             throw new RuntimeException(Constants.CSV_WRITE_ERROR_MESSAGE + e.getMessage());
         }
     }
