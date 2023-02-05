@@ -24,7 +24,7 @@
 &nbsp;&nbsp;Saved statements can be viewed in H2 console "http://localhost:8080/h2-console/"  
 &nbsp;&nbsp;If importing was successful "200 OK" status will be returned, if the type was not CSV "406 Not Acceptable" status will be returned.  
 &nbsp;&nbsp;Endpoint URL example: http://localhost:8080/insertStatementCSV  
-&nbsp;&nbsp;The CSV file should have a following format:  
+&nbsp;&nbsp;The CSV file should have a following format:  [statement-valid.csv](https://github.com/M0rtheus/account-management/files/10611540/statement-valid.csv)  
 >Account number,Operation date/time,Beneficiary,Comment,Amount,Currency  
 >LT111000011111000001,2022-01-21T10:15:30,First Person,Notes 1,100.11,EUR  
 >LT111000011111000002,2022-01-01T10:15:30,Second Person,Notes 2,200.21,EUR  
