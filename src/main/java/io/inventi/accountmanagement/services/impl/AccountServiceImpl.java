@@ -32,7 +32,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (IOException e) {
             throw new RuntimeException(Constants.CSV_PARSE_ERROR_MESSAGE + e.getMessage());
         } catch (TransactionSystemException e) {
-            throw new RuntimeException(Constants.STATEMENT_SAVE_ERROR_MESSAGE + e.getRootCause().getMessage());
+            throw new RuntimeException(Constants.STATEMENT_SAVE_ERROR_MESSAGE + e.getMessage());
         }
     }
 

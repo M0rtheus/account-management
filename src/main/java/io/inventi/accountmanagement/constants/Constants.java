@@ -21,7 +21,7 @@ public class Constants {
     public static final String CSV_PARSE_ERROR_MESSAGE = "Failed to parse CSV file: ";
     public static final String CSV_WRITE_ERROR_MESSAGE = "Failed to export CSV file: ";
     public static final String STATEMENT_SAVE_ERROR_MESSAGE = "Failed to save statement to DB: ";
-    public static final String STATEMENT_CONSTRAINT_MESSAGE = "null value";
+    public static final String STATEMENT_CONSTRAINT_MESSAGE = "is mandatory";
 
 //    File types
     public static final String CSV_TYPE = "text/csv";

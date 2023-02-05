@@ -1,7 +1,12 @@
 package io.inventi.accountmanagement.helpers;
 
 import io.inventi.accountmanagement.constants.Constants;
+import io.inventi.accountmanagement.exceptions.CSVNotValidException;
 import io.inventi.accountmanagement.model.Statement;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.Validator;
+import jakarta.validation.ValidatorFactory;
 import org.apache.commons.csv.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,6 +17,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class CSVHelper {
 
@@ -26,18 +32,41 @@ public class CSVHelper {
             for (CSVRecord csvRecord : csvRecords) {
                 Statement statement = new Statement(
                         csvRecord.get(Constants.STATE_COLUMN_ACCOUNT_NUMBER),
-                        LocalDateTime.parse(csvRecord.get(Constants.STATE_COLUMN_OPERATION_DATE_TIME)),
+                        csvRecord.get(Constants.STATE_COLUMN_OPERATION_DATE_TIME) != null ? LocalDateTime.parse(csvRecord.get(Constants.STATE_COLUMN_OPERATION_DATE_TIME)) : null,
                         csvRecord.get(Constants.STATE_COLUMN_BENEFICIARY),
                         csvRecord.get(Constants.STATE_COLUMN_COMMENT),
-                        new BigDecimal(csvRecord.get(Constants.STATE_COLUMN_AMOUNT)),
+                        csvRecord.get(Constants.STATE_COLUMN_AMOUNT) != null ? new BigDecimal(csvRecord.get(Constants.STATE_COLUMN_AMOUNT)) : null,
                         csvRecord.get(Constants.STATE_COLUMN_CURRENCY)
                 );
                 statements.add(statement);
             }
 
+            validateStatements(statements);
             return statements;
-        } catch (IOException e) {
+
+        } catch (IOException | CSVNotValidException e) {
             throw new RuntimeException(Constants.CSV_PARSE_ERROR_MESSAGE + e.getMessage());
+        }
+    }
+
+    private static void validateStatements(List<Statement> statements) throws CSVNotValidException {
+
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        List<String> validationErrors = new ArrayList<>();
+
+        for (Statement statement : statements){
+            Set<ConstraintViolation<Statement>> violations = validator.validate(statement);
+            if (violations.isEmpty()){
+                continue;
+            }
+            for (ConstraintViolation<Statement> violation : violations) {
+                validationErrors.add("Row " + (statements.indexOf(statement) + 1) + ": " + violation.getPropertyPath() + " " + violation.getMessage());
+            }
+        }
+
+        if (!validationErrors.isEmpty()){
+            throw new CSVNotValidException(String.join(", ", validationErrors));
         }
     }
 
