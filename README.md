@@ -33,7 +33,7 @@
 >LT111000011111000001,2022-04-14T10:15:30,First Person,Notes 6,-600.60,EUR  
 >LT111000011111000004,2022-02-28T10:15:30,Fourth Person,,400.41,EUR  
   
-&nbsp;&nbsp;Postman successful HTTP POST request example:  
+&nbsp;&nbsp;Successful HTTP POST request example in Postman:  
 ![image](https://user-images.githubusercontent.com/97054828/216830688-143c9723-627c-4ce3-b97d-eb90955df79d.png)
 
 ### "/getStatementCSV"  
