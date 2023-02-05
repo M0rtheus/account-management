@@ -6,6 +6,7 @@ import io.inventi.accountmanagement.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +30,7 @@ public class AccountControllerImpl implements AccountController {
             accountService.insertStatement(file);
             return ResponseEntity.ok().build();
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
     }
 
     @Override
