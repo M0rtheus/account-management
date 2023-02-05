@@ -19,7 +19,7 @@
 &nbsp;&nbsp;To insert the statements you need to provide a valid CSV file with statements in HTTP request body with KEY - "file".  
 &nbsp;&nbsp;The CSV file then will be parsed through Apache Commons CSV Library and saved to DB through JPA.  
 &nbsp;&nbsp;For simplicity the H2 database was chosen but it can be switched to other.  
-&nbsp;&nbsp;When parsing the CSV file the mandatory parameters will be validated through Spring validation with @NotNull annotation.  
+&nbsp;&nbsp;When parsing the CSV file the mandatory parameters will be validated through Spring validation with @NotNull annotation.  Empty string will be considered ass null values.
 &nbsp;&nbsp;If any value in CSV file is null the RuntimeException will be thrown with explanation.  
 &nbsp;&nbsp;Saved statements can be viewed in H2 console "http://localhost:8080/h2-console/"  
 &nbsp;&nbsp;If importing was successful "200 OK" status will be returned, if the type was not CSV "406 Not Acceptable" status will be returned.  
