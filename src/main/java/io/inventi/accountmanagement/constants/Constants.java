@@ -33,5 +33,5 @@ public class Constants {
     public static final String HTTP_HEADER_VALUE_ATTACHMENT_FILENAME = "attachment; filename=";
 
 //    File name
-    public static final String CSV_FILE_NAME = "Statements";
+    public static final String CSV_FILE_NAME = "statements.csv";
 }
